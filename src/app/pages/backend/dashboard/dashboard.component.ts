@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../services/auth.service';
+import { ProductService } from '../../../services/product.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,10 +18,29 @@ export class DashboardComponent implements OnInit {
   dataChart1:any;
   optionsChart1:any;
 
+  // ตัวแปรเก็บข้อมูล profile
+  userProfile = {
+    "fullname":"",
+    "username":"",
+    "role":""
+  }
 
-  constructor() { }
+  // สร้างตัวแปรรับข้อมูลจาก API
+  dataProduct:any = []
+
+  constructor(private auth: AuthService, private api: ProductService) {
+    this.userProfile.fullname = this.auth.getUser()['fullname']
+    this.userProfile.username = this.auth.getUser()['username']
+    this.userProfile.role = this.auth.getUser()['role']
+  }
 
   ngOnInit(): void {
+
+    // Read Product API
+    this.api.getProducts().subscribe((data: {}) => {
+      console.log(data)
+      this.dataProduct = data
+    })
 
     // Bar Chart
     this.typeChart = 'bar' // สามารถกำหนดเป็น 'line','bar','radar','pie','doughnut','polarArea','bubble','scatter

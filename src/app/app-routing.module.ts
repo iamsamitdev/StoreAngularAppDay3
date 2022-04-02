@@ -10,6 +10,13 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { ForgotpassComponent } from './pages/auth/forgotpass/forgotpass.component';
 import { DashboardComponent } from './pages/backend/dashboard/dashboard.component';
+import { StockComponent } from './pages/backend/stock/stock.component';
+import { SettingComponent } from './pages/backend/setting/setting.component';
+import { UsersComponent } from './pages/backend/users/users.component';
+import { ReportComponent } from './pages/backend/report/report.component';
+
+// Auth Guard
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   // Route สำหรับเรียกหน้า Frontend Layout
@@ -85,6 +92,7 @@ const routes: Routes = [
   {
     path: 'backend',
     component: BackendLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -93,6 +101,51 @@ const routes: Routes = [
           title: 'แดชบอร์ด',
           keywords: 'แดชบอร์ด, Store, Angular, App',
           description: 'This is dashboard pasword store angular app'
+        }
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: {
+          title: 'แดชบอร์ด',
+          keywords: 'แดชบอร์ด, Store, Angular, App',
+          description: 'This is dashboard store angular app'
+        }
+      },
+      {
+        path: 'stock',
+        component: StockComponent,
+        data: {
+          title: 'สต็อก',
+          keywords: 'สต็อก, Store, Angular, App',
+          description: 'This is stock angular app'
+        }
+      },
+      {
+        path: 'report',
+        component: ReportComponent,
+        data: {
+          title: 'รายงาน',
+          keywords: 'รายงาน, Store, Angular, App',
+          description: 'This is report angular app'
+        }
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        data: {
+          title: 'ผู้ใช้งาน',
+          keywords: 'ผู้ใช้งาน, Store, Angular, App',
+          description: 'This is users angular app'
+        }
+      },
+      {
+        path: 'setting',
+        component: SettingComponent,
+        data: {
+          title: 'ตั้งค่าระบบ',
+          keywords: 'ตั้งค่าระบบ, Store, Angular, App',
+          description: 'This is setting angular app'
         }
       }
     ]

@@ -5,6 +5,9 @@ import { Router } from '@angular/router'
 // เรียกใช้งาน User Service
 import { UserService } from '../../../services/user.service'
 
+// เรียกใช้งาน Auth Service
+import { AuthService } from '../../../services/auth.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -25,6 +28,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
     password: new FormControl(''),
   })
 
+  // UserLogin
+  userLogin = {
+    "fullname":"",
+    "email":"",
+    "username":"",
+    "role":"",
+    "token":""
+  }
+
   // สร้างตัวแปรไว้เช็คว่ามีการ Submit form
   submitted = false;
   msgStatus:string = '';
@@ -32,7 +44,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: UserService,
-    private route: Router
+    private route: Router,
+    private auth: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -69,10 +82,26 @@ export class LoginComponent implements OnInit, AfterViewInit {
       console.log(this.loginForm.value);
 
         // เรียกใช้งาน API Register
-      this.http.Login(this.loginForm.value).subscribe((data: {}) => {
+      this.http.Login(this.loginForm.value).subscribe((data: any) => {
+          
           this.msgStatus='<p class="alert alert-success text-center">เข้าสู่ระบบเรียบร้อย</p>'
+
+          this.userLogin = {
+            "fullname": data.user.fullname,
+            "email": data.user.email,
+            "username": data.user.username,
+            "role": data.user.role,
+            "token": data.token,
+          }
+
+          // console.log(this.userLogin)
+
+          // ส่งค่า token ไปเก็บลง localStorage ไว้
+          this.auth.sendToken(this.userLogin)
+
           // Redirect ไปหน้า backend
           this.route.navigate(['backend'])
+
       },error => {
         // You can access status:
         // console.log(error.status);

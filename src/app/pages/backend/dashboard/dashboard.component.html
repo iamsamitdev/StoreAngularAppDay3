@@ -1,4 +1,4 @@
-<h1>Welcome John Doe</h1>
+<h1>Welcome {{ userProfile.fullname }} ({{ userProfile.username }}) </h1>
 <div class="row">
     <div class="col-md-6">
         <chart [type]="typeChart1" [data]="dataChart1" [options]="optionsChart1" style="height: 450px"></chart>
@@ -16,21 +16,19 @@
             <th>Name</th>
             <th>Detail</th>
             <th>Price</th>
-            <th>Qty</th>
+            <th>By</th>
             <th>Date</th>
-            <th>Status</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>1</td>
-            <td><img src="xxx" width="50"></td>
-            <td>iPhone 13 Pro Max</td>
-            <td>Test Iphone Detail</td>
-            <td>42,000.00</td>
-            <td>5</td>
-            <td>26/03/2022</td>
-            <td>In Stock</td>
+        <tr *ngFor="let product of dataProduct.data">
+            <td>{{ product.id }}</td>
+            <td><img src="{{ product.image }}" width="50"></td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.description | slice:0:100 }}</td>
+            <td>{{ product.price }}</td>
+            <td>{{ product.users.fullname }}</td>
+            <td>{{ product.created_at }}</td>
         </tr>
     </tbody>
 </table>
