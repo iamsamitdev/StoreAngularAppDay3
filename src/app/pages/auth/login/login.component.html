@@ -1,0 +1,55 @@
+<div class="container-fluid" style="margin-top:100px">
+    <p class="text-center my-5"><a routerLink="" class="text-secondary text-decoration-none"><i class="fas fa-arrow-left"></i> &nbsp;กลับหน้าหลัก</a></p>
+    <div class="rounded d-flex justify-content-center">
+        <div class="col-sm-12 col-md-6 col-lg-3 shadow-lg p-5 pb-0">
+            <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+                <div [innerHTML]="msgStatus"></div>
+                <div class="pt-4">
+                    <div class="form-floating mb-3">
+                        <input type="text" 
+                        #emailInput
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"  
+                        formControlName="email"
+                        placeholder="Email">
+                        <label for="email">อีเมล์</label>
+                        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                            <div *ngIf="f['email'].errors['required']">ต้องป้อนอีเมล์</div>
+                            <div *ngIf="f['email'].errors['email']">ป้อนอีเมล์ไม่ถูกต้อง</div>
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="password" 
+                        class="form-control" 
+                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+                        formControlName="password"
+                        placeholder="Password">
+                        <label for="password">รหัสผ่าน</label>
+                        <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                            <div *ngIf="f['password'].errors['required']">ต้องป้อนรหัสผ่าน</div>
+                            <div *ngIf="f['password'].errors['minlength']">รหัสผ่านต้องไม่น้อยกว่า 6 ตัวอักษร</div>
+                            <div *ngIf="f['password'].errors['maxlength']">รหัสผ่านต้องไม่เกิน 32 ตัวอักษร</div>
+                        </div>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            จำฉันไว้
+                        </label>
+                    </div>
+                    <button class="btn btn-primary text-center mt-3 w-100" name="login" type="submit">
+                        เข้าสู่ระบบ
+                    </button>
+                    <p class="text-center mt-5">ยังไม่เป็นสมาชิก ?
+                        <a routerLink="/auth/register" class="text-primary text-decoration-none">ลงทะเบียนฟรี</a>
+                    </p>
+                    <p class="text-center">
+                        <a routerLink="/auth/forgotpass" class="text-primary text-decoration-none">ลืมรหัสผ่าน ?</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
